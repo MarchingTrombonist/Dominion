@@ -1,56 +1,24 @@
 import os
 import bs4
 import requests
+import pandas as pd
+import html5lib
 
 
-# Get HTML of wiki card list
-def getListHTML():
-    LIST_HTML = bs4.BeautifulSoup(
-        requests.get("http://wiki.dominionstrategy.com/index.php/List_of_cards").text,
-        "html.parser",
-    )
-    return LIST_HTML
-
-
-def makeDataTable(LIST_HTML, col_num=3):
-    # Stores card data
-    data = []
-    card = ["START"]
-
-    # Loops through html and finds all table rows and pulls data
-    for row in LIST_HTML.find_all("tr"):
-        for col in row.find_all("td", limit=col_num):
-            table_data = " ".join(col.get_text().split())
-            card.append(table_data)
-
-        if card[0].find("v . t . e") != -1:
-            break
-        data.append(card)
-        card = []
-    data.remove(["START"])
-    return data
-
-
-# GET PACK/TYPE LIST
-def createDataList(data, data_list=[1, 2]):
-    data_arr = []
-    for val in data_list:
-        eval(str(val) + "_list = []")
-
-    for row in data:
-        for val in data_list:
-            eval(str(val) + "_list.append(row[" + str(val) + "]")
-
-    for val in data_list:
-        eval("data_arr.append(" + str(val) + "_list)")
-
-    return data_arr
+def makeDataFrame(url="http://wiki.dominionstrategy.com/index.php/List_of_cards"):
+    dfs = pd.read_html(io=url, flavor="bs4")
+    return dfs[0]
 
 
 # MAKE FOLDERS
-def makeFolders(data_arr):
-    for pack in data_arr[0]:
-        os.makedirs("D:\Comp Sci\Coding\Python\Dominion\Sets\\" + str(pack) + "\\")
+def makeFolders(df, cols=["Set"], file_path="\Sets\\"):
+    for col in cols:
+        for val in df[col].unique():
+            full_path = (
+                "D:\Comp Sci\Coding\Python\Dominion" + file_path + str(val) + "\\"
+            )
+            if not os.path.exists(full_path):
+                os.makedirs(full_path)
 
 
 # GET IMAGE
