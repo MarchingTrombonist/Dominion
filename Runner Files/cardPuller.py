@@ -36,6 +36,7 @@ def fixSets(df, drop_old=False):
     if drop_old:
         df = df.drop(df[df["Edition"] == "1E"].index)
         df = df.drop(columns=["Edition"])
+        df = df.reset_index()
     return df
 
 
@@ -56,11 +57,13 @@ def makeFolders(df):
         full_path = "D:\\Comp Sci\\Coding\\Python\\Dominion\\Sets\\" + str(set) + "\\"
         if not os.path.exists(full_path):
             os.makedirs(full_path)
-        print(" \u2713")
+            print(" \u2713")
+        print("DONE")
 
 
 # GET IMAGE
 # Loops through card data and requests image file; saves to folder
+# TODO: Multithreading?
 def pullImages(df, print_cards=False):
     for ind in df.index:
         card_name = df["Name"][ind]
@@ -79,14 +82,24 @@ def pullImages(df, print_cards=False):
                 "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
             ).text
             site = bs4.BeautifulSoup(html, "html.parser")
+            if print_cards:
+                print(" \u2713", end="")
 
             image_link = site.find("div", class_="fullImageLink").a.img.get("src")
+            if print_cards:
+                print(" \u2713", end="")
+
             image = requests.get(
                 "http://wiki.dominionstrategy.com" + image_link
             ).content
+            if print_cards:
+                print(" \u2713", end="")
+
             f = open("Sets\\" + card_set + "\\" + card_name + ".jpg", "wb+")
             f.write(image)
             f.close
+            if print_cards:
+                print(" \u2713", end="")
 
         if print_cards:
-            print(" \u2713")
+            print(" DONE")
