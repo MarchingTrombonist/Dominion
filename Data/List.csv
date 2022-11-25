@@ -1,4 +1,4 @@
-,Name,Set,Types,Cost,Text,Actions / Villagers,Cards,Buys,Coins / Coffers,Trash / Return,Exile,Junk,Gain,Victory Points
+Name,Set,Types,Cost,Text,Actions / Villagers,Cards,Buys,Coins / Coffers,Trash / Return,Exile,Junk,Gain,Victory Points
 0,Cellar,Base,Action,,"+1 Action Discard any number of cards, then draw that many.",+1,"-X,+X",,,,,,,
 1,Chapel,Base,Action,,Trash up to 4 cards from your hand.,,,,,0-4,,,,
 2,Moat,Base,Action - Reaction,,"+2 CardsWhen another player plays an Attack card, you may first reveal this from your hand, to be unaffected by it.",,+2,,,,,,,

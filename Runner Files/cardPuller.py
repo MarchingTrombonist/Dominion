@@ -2,8 +2,6 @@ import os
 import bs4
 import requests
 import pandas as pd
-import html5lib
-import re
 
 
 def makeDataFrame(
@@ -21,7 +19,7 @@ def makeDataFrame(
 
 def fixMultipleTypes(df):
     dfSplit = df["Types"].str.split(" - ", expand=True)
-    df.drop(columns=["Types"], inplace=True)
+    df = df.drop(columns=["Types"])
     df.insert(1, "Type Four", dfSplit[3])
     df.insert(1, "Type Three", dfSplit[2])
     df.insert(1, "Type Two", dfSplit[1])
@@ -29,12 +27,14 @@ def fixMultipleTypes(df):
     return df
 
 
-def fixSets(df):
+def fixSets(df, drop_old=False):
     dfSplit = df["Set"].str.split(", ", expand=True)
-    df.drop(columns=["Set"], inplace=True)
+    df = df.drop(columns=["Set"])
     df.insert(1, "Edition", dfSplit[1])
     df.insert(1, "Set", dfSplit[0])
-    df["Edition"].replace("None", "1E")
+    if drop_old:
+        df = df.drop(df[df["Edition"] == "1E"].index)
+        df = df.drop(columns=["Edition"])
     return df
 
 
@@ -44,22 +44,25 @@ def fixSets(df):
 # MAKE FOLDERS
 # TODO: Add nested folders: set\type\card
 # TODO: Add nested folders: type\set\card
-def makeFolders(df, file_path="\Sets\\"):
+def makeFolders(df):
     for set in df["Set"].unique():
-        full_path = "D:\Comp Sci\Coding\Python\Dominion" + str(set) + "\\"
+        print("Creating %s folder" % set, end="")
+        full_path = "D:\\Comp Sci\\Coding\\Python\\Dominion\\Sets\\" + str(set) + "\\"
         if not os.path.exists(full_path):
             os.makedirs(full_path)
+        print(" \u2713")
 
 
 # GET IMAGE
 # Loops through card data and requests image file; saves to folder
-def pullImages(df, print=False):
-    for card in df:
-        card_name = card[0]
-        card_set = card[1]
+def pullImages(df, print_cards=False):
+    for ind in df.index:
+        card_name = df["Name"][ind]
+        card_set = df["Set"][ind]
         # card_type = card[2]
 
-        print("Processing %s's %s" % (card_set, card_name), end="")
+        if print_cards:
+            print("Processing %s's %s" % (card_set, card_name), end="")
 
         html = requests.get(
             "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
@@ -72,4 +75,5 @@ def pullImages(df, print=False):
         f.write(image)
         f.close
 
-        print("\u2713")
+        if print_cards:
+            print(" \u2713")
