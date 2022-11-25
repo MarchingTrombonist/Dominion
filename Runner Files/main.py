@@ -1,7 +1,23 @@
+import os
 import cardPuller as pull
+import time
 
-df = pull.makeDataFrame()
+start_time = time.perf_counter
+# TODO: add separate runner files for dataframe work vs request work
+
+listFile = "Data\\List.csv"
+
+if os.path.exists(listFile):
+    df = pull.makeDataFrame(listFile, "csv")
+else:
+    df = pull.makeDataFrame()
+    df.to_csv(listFile)
+
 df = pull.fixMultipleTypes(df)
-print(df)
-# pull.makeFolders(df, cols=["Types"], file_path="\pdTest\\")
-# pull.displayDataFrame(df)
+df = pull.fixSets(df)
+
+pull.makeFolders(df)
+pull.pullImages(df)
+
+end_time = time.perf_counter
+print("Time taken: %0.4f seconds" % (end_time - start_time))

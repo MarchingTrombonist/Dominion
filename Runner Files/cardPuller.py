@@ -6,18 +6,35 @@ import html5lib
 import re
 
 
-def makeDataFrame(url="http://wiki.dominionstrategy.com/index.php/List_of_cards"):
-    dfs = pd.read_html(io=url, flavor="bs4")
-    return dfs[0]
+def makeDataFrame(
+    src="http://wiki.dominionstrategy.com/index.php/List_of_cards", type="html"
+):
+    if type == "html":
+        dfs = pd.read_html(io=src, flavor="bs4")
+        return dfs[0]
+    elif type == "csv":
+        df = pd.read_csv(src)
+        return df
+    else:
+        raise ValueError
 
 
 def fixMultipleTypes(df):
     dfSplit = df["Types"].str.split(" - ", expand=True)
-    df.insert(2, "Type Four", dfSplit[3])
-    df.insert(2, "Type Three", dfSplit[2])
-    df.insert(2, "Type Two", dfSplit[1])
-    df.insert(2, "Type One", dfSplit[0])
     df.drop(columns=["Types"], inplace=True)
+    df.insert(1, "Type Four", dfSplit[3])
+    df.insert(1, "Type Three", dfSplit[2])
+    df.insert(1, "Type Two", dfSplit[1])
+    df.insert(1, "Type One", dfSplit[0])
+    return df
+
+
+def fixSets(df):
+    dfSplit = df["Set"].str.split(", ", expand=True)
+    df.drop(columns=["Set"], inplace=True)
+    df.insert(1, "Edition", dfSplit[1])
+    df.insert(1, "Set", dfSplit[0])
+    df["Edition"].replace("None", "1E")
     return df
 
 
@@ -27,32 +44,22 @@ def fixMultipleTypes(df):
 # MAKE FOLDERS
 # TODO: Add nested folders: set\type\card
 # TODO: Add nested folders: type\set\card
-def makeFolders(df, cols=["Types"], file_path="\Sets\\"):
-    for col in cols:
-        for set in df["Set"].unique():
-            setDF = df[df["Set"] == set]
-            print(setDF[col].unique())
-            for val in setDF[col].unique():
-                full_path = (
-                    "D:\Comp Sci\Coding\Python\Dominion"
-                    + file_path
-                    + "\\"
-                    + set
-                    + "\\"
-                    + str(val)
-                    + "\\"
-                )
-                if not os.path.exists(full_path):
-                    os.makedirs(full_path)
+def makeFolders(df, file_path="\Sets\\"):
+    for set in df["Set"].unique():
+        full_path = "D:\Comp Sci\Coding\Python\Dominion" + str(set) + "\\"
+        if not os.path.exists(full_path):
+            os.makedirs(full_path)
 
 
 # GET IMAGE
 # Loops through card data and requests image file; saves to folder
-def pullImages(df):
+def pullImages(df, print=False):
     for card in df:
         card_name = card[0]
         card_set = card[1]
-        card_type = card[2]
+        # card_type = card[2]
+
+        print("Processing %s's %s" % (card_set, card_name), end="")
 
         html = requests.get(
             "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
@@ -64,3 +71,5 @@ def pullImages(df):
         f = open("Sets\\" + card_set + "\\" + card_name + ".jpg", "wb+")
         f.write(image)
         f.close
+
+        print("\u2713")
