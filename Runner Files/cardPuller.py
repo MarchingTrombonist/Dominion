@@ -3,6 +3,7 @@ import bs4
 import requests
 import pandas as pd
 import numpy as np
+import _thread
 
 
 def makeDataFrame(
@@ -63,43 +64,86 @@ def makeFolders(df):
 
 # GET IMAGE
 # Loops through card data and requests image file; saves to folder
-# TODO: Multithreading?
+# TODO: Multithreading? https://stackoverflow.com/questions/38280094/python-requests-with-multithreading
 def pullImages(df, print_cards=False):
     for ind in df.index:
-        card_name = df["Name"][ind]
-        card_set = df["Set"][ind]
-        # card_type = card[2]
-        card_path = "Sets\\" + card_set + "\\" + card_name + ".jpg"
+        try:
+            _thread.start_new_thread(threadPullImages, (ind, df, True))
+        except:
+            print("Error")
 
+        # card_name = df["Name"][ind]
+        # card_set = df["Set"][ind]
+        # # card_type = card[2]
+        # card_path = "Sets\\" + card_set + "\\" + card_name + ".jpg"
+
+        # if print_cards:
+        #     print(
+        #         "Processing %s's %s [%d/%d]" % (card_set, card_name, ind + 1, len(df)),
+        #         end="",
+        #     )
+
+        # if not os.path.exists(card_path):
+        #     html = requests.get(
+        #         "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
+        #     ).text
+        #     site = bs4.BeautifulSoup(html, "html.parser")
+        #     if print_cards:
+        #         print(" \u2713", end="")
+
+        #     image_link = site.find("div", class_="fullImageLink").a.img.get("src")
+        #     if print_cards:
+        #         print(" \u2713", end="")
+
+        #     image = requests.get(
+        #         "http://wiki.dominionstrategy.com" + image_link
+        #     ).content
+        #     if print_cards:
+        #         print(" \u2713", end="")
+
+        #     f = open("Sets\\" + card_set + "\\" + card_name + ".jpg", "wb+")
+        #     f.write(image)
+        #     f.close
+        #     if print_cards:
+        #         print(" \u2713", end="")
+
+        # if print_cards:
+        #     print(" DONE")
+
+
+def threadPullImages(ind, df, print_cards=False):
+    card_name = df["Name"][ind]
+    card_set = df["Set"][ind]
+    # card_type = card[2]
+    card_path = "Sets\\" + card_set + "\\" + card_name + ".jpg"
+
+    if print_cards:
+        print(
+            "Processing %s's %s [%d/%d]" % (card_set, card_name, ind + 1, len(df)),
+            end="",
+        )
+
+    if not os.path.exists(card_path):
+        html = requests.get(
+            "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
+        ).text
+        site = bs4.BeautifulSoup(html, "html.parser")
         if print_cards:
-            print(
-                "Processing %s's %s [%d/%d]" % (card_set, card_name, ind + 1, len(df)),
-                end="",
-            )
+            print(" \u2713", end="")
 
-        if not os.path.exists(card_path):
-            html = requests.get(
-                "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
-            ).text
-            site = bs4.BeautifulSoup(html, "html.parser")
-            if print_cards:
-                print(" \u2713", end="")
-
-            image_link = site.find("div", class_="fullImageLink").a.img.get("src")
-            if print_cards:
-                print(" \u2713", end="")
-
-            image = requests.get(
-                "http://wiki.dominionstrategy.com" + image_link
-            ).content
-            if print_cards:
-                print(" \u2713", end="")
-
-            f = open("Sets\\" + card_set + "\\" + card_name + ".jpg", "wb+")
-            f.write(image)
-            f.close
-            if print_cards:
-                print(" \u2713", end="")
-
+        image_link = site.find("div", class_="fullImageLink").a.img.get("src")
         if print_cards:
-            print(" DONE")
+            print(" \u2713", end="")
+
+        image = requests.get("http://wiki.dominionstrategy.com" + image_link).content
+        if print_cards:
+            print(" \u2713", end="")
+
+        f = open("Sets\\" + card_set + "\\" + card_name + ".jpg", "wb+")
+        f.write(image)
+        f.close
+        if print_cards:
+            print(" \u2713", end="")
+
+    if print_cards:
+        print(" DONE")
