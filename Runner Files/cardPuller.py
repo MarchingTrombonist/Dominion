@@ -2,6 +2,7 @@ import os
 import bs4
 import requests
 import pandas as pd
+import numpy as np
 
 
 def makeDataFrame(
@@ -45,8 +46,13 @@ def fixSets(df, drop_old=False):
 # TODO: Add nested folders: set\type\card
 # TODO: Add nested folders: type\set\card
 def makeFolders(df):
-    for set in df["Set"].unique():
-        print("Creating %s folder" % set, end="")
+    unique_list = df["Set"].unique()
+    for set in unique_list:
+        print(
+            "Creating %s folder [%d/%d]"
+            % (set, np.where(unique_list == set)[0][0] + 1, len(unique_list)),
+            end="",
+        )
         full_path = "D:\\Comp Sci\\Coding\\Python\\Dominion\\Sets\\" + str(set) + "\\"
         if not os.path.exists(full_path):
             os.makedirs(full_path)
@@ -60,20 +66,27 @@ def pullImages(df, print_cards=False):
         card_name = df["Name"][ind]
         card_set = df["Set"][ind]
         # card_type = card[2]
+        card_path = "Sets\\" + card_set + "\\" + card_name + ".jpg"
 
         if print_cards:
-            print("Processing %s's %s" % (card_set, card_name), end="")
+            print(
+                "Processing %s's %s [%d/%d]" % (card_set, card_name, ind + 1, len(df)),
+                end="",
+            )
 
-        html = requests.get(
-            "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
-        ).text
-        site = bs4.BeautifulSoup(html, "html.parser")
+        if not os.path.exists(card_path):
+            html = requests.get(
+                "http://wiki.dominionstrategy.com/index.php/File:" + card_name + ".jpg"
+            ).text
+            site = bs4.BeautifulSoup(html, "html.parser")
 
-        image_link = site.find("div", class_="fullImageLink").a.img.get("src")
-        image = requests.get("http://wiki.dominionstrategy.com" + image_link).content
-        f = open("Sets\\" + card_set + "\\" + card_name + ".jpg", "wb+")
-        f.write(image)
-        f.close
+            image_link = site.find("div", class_="fullImageLink").a.img.get("src")
+            image = requests.get(
+                "http://wiki.dominionstrategy.com" + image_link
+            ).content
+            f = open("Sets\\" + card_set + "\\" + card_name + ".jpg", "wb+")
+            f.write(image)
+            f.close
 
         if print_cards:
             print(" \u2713")
