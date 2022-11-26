@@ -16,8 +16,9 @@ else:
 df = pull.fixMultipleTypes(df)
 df = pull.fixSets(df, drop_old=True)
 
-pull.makeFolders(df)
-pull.pullImages(df, True)
+pull.makeFolders(df, True)
+pull.pullImages(df, True, False)
+pull.makeDecks(df, True)
 
 end_time = time.perf_counter()
 print("Time taken: %4.4f seconds" % (end_time - start_time))
