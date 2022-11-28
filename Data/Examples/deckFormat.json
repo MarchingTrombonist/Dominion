@@ -1,0 +1,72 @@
+{
+      "GUID": "446e8a",
+      "Name": "Deck",
+      "Transform": {
+        "posX": 0,
+        "posY": 1.029071,
+        "posZ": 1.05718219,
+        "rotX": 2.12965446E-07,
+        "rotY": 180.0,
+        "rotZ": -6.055118E-07,
+        "scaleX": 1.0,
+        "scaleY": 1.0,
+        "scaleZ": 1.0
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "AltLookAngle": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "ColorDiffuse": {
+        "r": 0.713235259,
+        "g": 0.713235259,
+        "b": 0.713235259
+      },
+      "LayoutGroupSortIndex": 0,
+      "Value": 0,
+      "Locked": false,
+      "Grid": true,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": true,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": true,
+      "Hands": false,
+      "SidewaysCard": false,
+      "DeckIDs": [
+        202,
+        208,
+        204,
+        205,
+        206,
+        207,
+        200,
+        201,
+        203,
+        209
+      ],
+      "CustomDeck": {
+        "2": {
+          "FaceURL": "file:///D:\\Comp Sci\\Coding\\Python\\Dominion\\Sets\\Base\\Decks\\Artisan.png",
+          "BackURL": "file:///D:\\Comp Sci\\Coding\\Python\\Dominion\\Back\\Card_back.jpg",
+          "NumWidth": 5,
+          "NumHeight": 2,
+          "BackIsHidden": false,
+          "UniqueBack": false,
+          "Type": 0
+        }
+      },
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "ContainedObjects": [
+        CODEOBJECT: LIST OF CARDS
+      ]
+    }

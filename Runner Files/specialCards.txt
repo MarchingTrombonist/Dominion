@@ -1,0 +1,9 @@
+Castles:
+Split Piles:
+Victory:
+Non-Supply:
+    Curses:
+    Victory:
+    Potions:
+    Treasure:
+    Events:
