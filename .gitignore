@@ -1,3 +1,4 @@
 *.jpg
 *.tsdb
 *.png
+venv/
