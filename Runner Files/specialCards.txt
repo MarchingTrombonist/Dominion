@@ -1,29 +1,29 @@
 DOMINION:
     KINGDOM:
-        Gardens:
+        Gardens: (8/12)
     TREASURE:
         Copper:
         Silver:
         Gold:
     VICTORY:
-        Estate:
-        Duchy:
-        Province:
-        Curse:
+        Estate: (8/12)
+        Duchy: (8/12)
+        Province: (8/12)
+        Curse: (10*)
 INTRIGUE:
     KINGDOM:
-        Duke:
-        Harem:
-        Mill:
-        Nobles:
+        Duke: (8/12)
+        Harem: (8/12)
+        Mill: (8/12)
+        Nobles: (8/12)
 EMPIRES:
     KINGDOM:
-        Castles:
-        Catapult/Rocks:
-        Encampment/Plunder:
-        Gladiator/Fortune:
-        Patrician/Emporium:
-        Settlers/Bustling Village:
+        Castles: (8/12)
+        Catapult/Rocks: (Split 5/5)
+        Encampment/Plunder: (Split 5/5)
+        Gladiator/Fortune: (Split 5/5)
+        Patrician/Emporium: (Split 5/5)
+        Settlers/Bustling Village: (Split 5/5)
     OTHER:
         Events:
         Landmarks:
