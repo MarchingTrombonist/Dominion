@@ -1,9 +1,58 @@
-Castles:
-Split Piles:
-Victory:
-Non-Supply:
-    Curses:
-    Victory:
-    Potions:
-    Treasure:
-    Events:
+DOMINION:
+    KINGDOM:
+        Gardens:
+    TREASURE:
+        Copper:
+        Silver:
+        Gold:
+    VICTORY:
+        Estate:
+        Duchy:
+        Province:
+        Curse:
+INTRIGUE:
+    KINGDOM:
+        Duke:
+        Harem:
+        Mill:
+        Nobles:
+EMPIRES:
+    KINGDOM:
+        Castles:
+        Catapult/Rocks:
+        Encampment/Plunder:
+        Gladiator/Fortune:
+        Patrician/Emporium:
+        Settlers/Bustling Village:
+    OTHER:
+        Events:
+        Landmarks:
+NOCTURNE:
+    KINGDOM:
+        Cemetery:
+    HEIRLOOM:
+        Cursed Gold:
+        Goat:
+        Haunted Mirror:
+        Lucky Coin:
+        Magic Lamp:
+        Pasture:
+        Pouch:
+    OTHER:
+        Boons:
+        Hexes:
+        Zombies:
+        Imp:
+        Will-o-Wisp:
+        Wish:
+        States:
+ALCHEMY:
+    KINGDOM:
+        Vineyard:
+    TREASURE:
+        Potion:
+PROSPERITY:
+    TREASURE:
+        Platinum:
+    VICTORY:
+        Colony:
