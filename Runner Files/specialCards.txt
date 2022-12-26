@@ -9,7 +9,7 @@ DOMINION:
         Estate: (8/12)
         Duchy: (8/12)
         Province: (8/12)
-        Curse: (10*)
+        Curse: (10 * (n-1)) (50)
 INTRIGUE:
     KINGDOM:
         Duke: (8/12)
@@ -18,7 +18,7 @@ INTRIGUE:
         Nobles: (8/12)
 EMPIRES:
     KINGDOM:
-        Castles: (8/12)
+        Castles: (8 unique/12 with 4 duplicates)
         Catapult/Rocks: (Split 5/5)
         Encampment/Plunder: (Split 5/5)
         Gladiator/Fortune: (Split 5/5)
@@ -29,23 +29,24 @@ EMPIRES:
         Landmarks:
 NOCTURNE:
     KINGDOM:
-        Cemetery:
+        Cemetery: (8/12)
     HEIRLOOM:
-        Cursed Gold:
-        Goat:
-        Haunted Mirror:
-        Lucky Coin:
-        Magic Lamp:
-        Pasture:
-        Pouch:
+        Cursed Gold: (n) (6)
+        Goat: (n) (6)
+        Haunted Mirror: (n) (6)
+        Lucky Coin: (n) (6)
+        Magic Lamp: (n) (6)
+        Pasture: (n) (6)
+        Pouch: (n) (6)
     OTHER:
         Boons:
         Hexes:
-        Zombies:
-        Imp:
-        Will-o-Wisp:
-        Wish:
-        States:
+        Zombies: (3 unique)
+        Imp: (13)
+        Will-o-Wisp: (12)
+        Wish: (12)
+        States: (12)
+        Lost in the Woods: (1)
 ALCHEMY:
     KINGDOM:
         Vineyard:

@@ -2,3 +2,4 @@
 *.tsdb
 *.png
 venv/
+__pycache__/
